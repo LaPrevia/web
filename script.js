@@ -1,8 +1,59 @@
-// script.js - Carrito dinámico completo (reemplazar archivo actual)
-// ---------------------------------------------------------------
+const IMAGE_MAP = {
+  /* Cervezas */
+  "Patagonia Amber Lager": "patagonia-amber-lager.webp",
+  "Patagonia IPA": "patagonia-ipa.webp",
+  "Amstel x6": "amstel-lager-x6-latas.webp",
+  "Heineken x6": "heineken-x6-latas.webp",
+  "Brahma x6": "brahma-x6-latas.webp",
+  "Imperial APA x6": "imperial-apa-x6-latas.webp",
+  "Imperial Golden x6": "imperial-golden-x6-latas.webp",
+  "Imperial IPA x6": "imperial-ipa-x6-latas.webp",
+  "Schneider Limón x6": "scheneider-limon-x6-latas.webp",
+  "Miller x6": "miller-x6-latas.webp",
+  "Monster x6": "monster-x6-latas.webp",
 
-const CART_KEY = "catalogo_cart_v2";
-const PHONE_NUMBER = "5492241603438"; // <- REEMPLAZÁ con el número real
+  /* Gaseosas / acompañantes */
+  "Fernet + 2 Cocacolas + Hielo": "fernet+2-coca-1,5L+hielo.webp",
+  "Coca Cola 1.5L + Hielo": "fernet+2-coca-1,5L+hielo.webp",
+  "Gaseosas 500ml": "gaseosas-500ml.webp",
+  "Gaseosa 500ml": "gaseosas-500ml.webp",
+  "Aquarius 500ml": "aquarius-500ml.webp",
+  "Gatorade 600ml": "gatorade-600ml.webp",
+  "Levité 1,5L": "levite-1,5L.webp",
+
+  /* Destilados / blancos */
+  "Smirnoff x6 latas": "smirnoff-x6-latas.webp",
+  "Smirnoff + 3 Speed": "smirnof+3-latas-speed.webp",
+  "Smirnoff x6 (manzana/frambuesa)": "smirnoff-x6-latas.webp",
+  "Skyy Apple + 4 Speed": "skyy-apple+4-latas-speed.webp",
+  "Skyy Blueberry + 4 Speed": "skyy-blueberri+4-latas-speed.webp",
+  "Skyy Cosmic + 4 Speed": "skyy-cosmic+4-latas-speed.webp",
+  "Skyy Raspberry + 4 Speed": "skyy-raspberry+4-latas-speed.webp",
+  "Skyy Andromeda + 4 Speed": "skyy-andromeda+4-latas-speed.webp",
+
+  /* Vinos / otros */
+  "Norton + 2 Speed": "norton+2-latas-speed.webp",
+  "Equis": "equis.webp",
+  "Campari + 2 Baggios": "campari+2-baggios.webp",
+  "Dr Lemon 1,5L": "drlemon-1,5L.webp",
+  "Gancia x6 latas": "Gancia-x6-latas.webp",
+  "Gancia + Sprite + Hielo": "gancia+sprite+hielo.webp",
+  "Beefeater + 2 Schweppes": "beefeater+2-schweepes.webp",
+  "Merle + 2 Schweppes": "merle+2-scheweepes.webp",
+  "Tres Plumas + 4 Speed": "tresplumas+4-latas-speed.webp"
+};
+
+function getProductImage(productName) {
+  return IMAGE_MAP[productName] 
+    ? `img/${IMAGE_MAP[productName]}`
+    : "img/banner.webp"; // fallback elegante
+}
+
+// script.js - Carrito dinámico adaptado a product-card (reemplazar archivo actual)
+// -------------------------------------------------------------------------------
+
+const CART_KEY = "catalogo_cart_v3";
+const PHONE_NUMBER = "5492241603438";
 
 // Estado del carrito (carga desde localStorage)
 let cart = JSON.parse(localStorage.getItem(CART_KEY) || "[]");
@@ -16,21 +67,27 @@ const cartItemsList = document.getElementById("cart-items");
 const cartTotalEl = document.getElementById("cart-total");
 const whatsappBtn = document.getElementById("whatsapp-btn");
 
+
 // ----------------- Utilities -----------------
 function saveCart() {
   localStorage.setItem(CART_KEY, JSON.stringify(cart));
 }
 
 function formatCurrency(n) {
-  // Asume pesos. Devuelve con separador de miles, sin decimales.
   return new Intl.NumberFormat("es-AR").format(n ? n : 0);
 }
 
 // Extrae número entero desde strings tipo "$14.500" o "$ 8.500"
 function parsePrice(text) {
-  if (!text) return 0;
+  if (!text && text !== 0) return 0;
+  // Si ya es number
+  if (typeof text === "number") return Math.round(text);
+  // Si viene en data-price (string numérico)
+  const asNum = Number(String(text).replace(/\s+/g, "").replace(",", "."));
+  if (!Number.isNaN(asNum) && String(asNum).trim() !== "") return Math.round(asNum);
+
   // Quitar todo lo que no sea dígito
-  const digits = text.replace(/\D+/g, "");
+  const digits = String(text).replace(/\D+/g, "");
   return digits ? parseInt(digits, 10) : 0;
 }
 
@@ -50,19 +107,33 @@ function findItem(id) {
   return cart.find((x) => x.id === id);
 }
 
-function addToCart(item) {
-  // item { id, name, price, qty }
+async function addToCart(item) {
+  // item { id, name, price, qty, image }
   const existing = findItem(item.id);
+  const isNew = !existing;
   if (existing) {
     existing.qty += item.qty;
   } else {
     cart.push({ ...item });
   }
   saveCart();
-  renderCart();
+  await renderCart();
+
+  // Si el producto agregado es único (no existía antes) y el panel
+  // ya está abierto, hacer scroll para mostrar el último elemento.
+  if (isNew && cartPanel && cartPanel.classList.contains("open") && cartItemsList) {
+    setTimeout(() => {
+      try {
+        // si hay elementos, scrollear al final
+        cartItemsList.scrollTop = cartItemsList.scrollHeight;
+      } catch (e) {
+        console.warn('scroll carrito falló', e);
+      }
+    }, 80);
+  }
 }
 
-function changeQty(id, delta) {
+async function changeQty(id, delta) {
   const it = findItem(id);
   if (!it) return;
   it.qty += delta;
@@ -70,23 +141,50 @@ function changeQty(id, delta) {
     cart = cart.filter((x) => x.id !== id);
   }
   saveCart();
-  renderCart();
+  await renderCart();
 }
 
-function removeItem(id) {
+async function removeItem(id) {
   cart = cart.filter((x) => x.id !== id);
   saveCart();
-  renderCart();
+  await renderCart();
 }
 
-function clearCart() {
+async function clearCart() {
   cart = [];
   saveCart();
-  renderCart();
+  await renderCart();
+}
+
+async function syncCartPrices() {
+  if (cart.length === 0) return;
+
+  const ids = cart.map(i => i.id);
+
+  const { data, error } = await client
+    .from('products')
+    .select('id, price')
+    .in('id', ids);
+
+  if (error) {
+    console.error("Error sincronizando precios:", error);
+    return;
+  }
+
+  data.forEach(product => {
+    const item = cart.find(i => i.id === product.id);
+    if (item) {
+      item.price = product.price; // ← actualiza precio real
+    }
+  });
+
+  saveCart();
 }
 
 // ----------------- Render del carrito -----------------
-function renderCart() {
+async function renderCart() {
+
+  await syncCartPrices();
   // Actualizar contador
   const totalCount = cart.reduce((s, i) => s + i.qty, 0);
   cartCountEl.textContent = totalCount;
@@ -113,12 +211,10 @@ function renderCart() {
       const li = document.createElement("li");
       li.className = "cart-item";
 
-      // Íconos SVG (inline) — simples y nítidos para mobile
       const plusSVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5v14M5 12h14" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
       const minusSVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
       const trashSVG = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18M8 6v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6M10 6V4a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v2" stroke="#d32f2f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
-      // Estructura: thumb | detalles | acciones
       li.innerHTML = `
         <div class="cart-thumb-wrap">
           <img src="${it.image || ''}" class="cart-thumb" alt="${it.name}">
@@ -141,69 +237,76 @@ function renderCart() {
           </button>
         </div>
       `;
-
       cartItemsList.appendChild(li);
     });
   }
 
   // ---- CTA WhatsApp: habilitar / deshabilitar ----
   const isEmpty = cart.length === 0;
-
-  whatsappBtn.disabled = isEmpty;
-  whatsappBtn.style.opacity = isEmpty ? "0.5" : "1";
-  whatsappBtn.style.pointerEvents = isEmpty ? "none" : "auto";
+  if (whatsappBtn) {
+    whatsappBtn.disabled = isEmpty;
+    whatsappBtn.style.opacity = isEmpty ? "0.5" : "1";
+    whatsappBtn.style.pointerEvents = isEmpty ? "none" : "auto";
+  }
 
   // Resumen: Bebidas / Envío / Total
   const envioText = "Sin cargo";
-  const total = subtotal; // si quisieras sumar envío, agrégalo aquí
-  cartTotalEl.innerHTML = `
-    <div class="summary-label">Resumen compra</div>
-    <div class="summary-row"><span>Bebidas:</span><span>$${formatCurrency(subtotal)}</span></div>
-    <div class="summary-row"><span>Envío:</span><span>${envioText}</span></div>
-    <div class="summary-row total-row"><span>Total:</span><span>$${formatCurrency(total)}</span></div>
-  `;
+  const total = subtotal;
+  if (cartTotalEl) {
+    cartTotalEl.innerHTML = `
+      <div class="summary-label">Resumen compra</div>
+      <div class="summary-row"><span>Bebidas:</span><span>$${formatCurrency(subtotal)}</span></div>
+      <div class="summary-row"><span>Envío:</span><span>${envioText}</span></div>
+      <div class="summary-row total-row"><span>Total:</span><span>$${formatCurrency(total)}</span></div>
+    `;
+  }
 }
-
-
 
 // ----------------- Panel carrito UI -----------------
 function openCartPanel() {
   cartPanel.classList.add("open");
   cartToggle.classList.add("hidden");
+  cartPanel.setAttribute("aria-hidden", "false");
+  cartToggle.setAttribute("aria-expanded", "true");
+  // bloquear scroll en html y body para evitar doble scrollbar mientras
+  // el panel controlado es el que se mueve internamente
+  document.documentElement.classList.add("cart-open");
+  document.body.classList.add("cart-open");
 }
 
 function closeCartPanel() {
   cartPanel.classList.remove("open");
   cartToggle.classList.remove("hidden");
+  cartPanel.setAttribute("aria-hidden", "true");
+  cartToggle.setAttribute("aria-expanded", "false");
+  document.documentElement.classList.remove("cart-open");
+  document.body.classList.remove("cart-open");
 }
 
 function toggleCart() {
   const isOpen = cartPanel.classList.contains("open");
-
-  if (isOpen) {
-    closeCartPanel();
-    cartPanel.setAttribute("aria-hidden", "true");
-  } else {
-    openCartPanel();
-    cartPanel.setAttribute("aria-hidden", "false");
-  }
+  if (isOpen) closeCartPanel();
+  else openCartPanel();
 }
 
-// ----------------- Handlers en las cards (combos) -----------------
-function setupComboCardControls() {
-  // 1) Cantidad visual dentro de la card (+ / -)
-  document.querySelectorAll(".combo-card").forEach((card) => {
-    // delegación local: buscar botones .qty-btn dentro de la card
+// ----------------- Product card controls (cantidad + agregar) -----------------
+function setupProductCardControls() {
+  // Selecciona tanto .product-card como .combo-card (por compatibilidad)
+  const cards = document.querySelectorAll(".product-card, .combo-card");
+
+  cards.forEach((card) => {
+
+    
+    // Cantidad dentro de la card (+ / -)
     card.querySelectorAll(".qty-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         const qtyEl = card.querySelector(".qty");
+        if (!qtyEl) return;
         let current = parseInt(qtyEl.textContent || "1", 10);
-        if (btn.textContent.trim() === "+") {
-          current += 1;
-        } else if (btn.textContent.trim() === "-") {
-          current = Math.max(1, current - 1);
-        } else {
-          // si usan botones con data-action en card (no requerido)
+        const text = btn.textContent.trim();
+        if (text === "+") current += 1;
+        else if (text === "-") current = Math.max(1, current - 1);
+        else {
           const action = btn.getAttribute("data-action");
           if (action === "inc") current += 1;
           if (action === "dec") current = Math.max(1, current - 1);
@@ -212,42 +315,48 @@ function setupComboCardControls() {
       });
     });
 
-    // 2) Botón agregar
-      const addBtn = card.querySelector(".add-btn");
+    // Botón agregar
+    const addBtn = card.querySelector(".add-btn");
+    if (!addBtn) return;
 
-    if (addBtn) {
-      addBtn.addEventListener("click", () => {
-        // 1. Obtener elementos
-        const nameEl = card.querySelector("h3");
-        const priceEl = card.querySelector(".combo-price");
-        const qtyEl = card.querySelector(".qty");
-        const imgEl = card.querySelector("img");
+    addBtn.addEventListener("click", () => {
+      // 1) Obtener datos desde la card
+      const titleEl = card.querySelector("h4, h3");
+      const priceEl = card.querySelector(".price, .combo-price");
+      const qtyEl = card.querySelector(".qty");
+      const imgEl = card.querySelector("img");
 
-        // 2. Normalizar datos
-        const name = nameEl ? nameEl.textContent.trim() : "Producto";
-        const price = priceEl ? parsePrice(priceEl.textContent) : 0;
-        const qty = qtyEl ? Math.max(1, parseInt(qtyEl.textContent, 10)) : 1;
-        const id = card.getAttribute("data-id") || slugify(name);
-        const image = imgEl ? imgEl.src : "";
+      const name = titleEl ? titleEl.textContent.trim() : "Producto";
+      // preferir data-price si existe
+      let price = 0;
+      if (priceEl) {
+        const dataPrice = priceEl.getAttribute && priceEl.getAttribute("data-price");
+        price = dataPrice ? parsePrice(dataPrice) : parsePrice(priceEl.textContent);
+      }
 
-        // 3. Agregar al carrito
-        addToCart({ id, name, price, qty, image });
+      const qty = qtyEl ? Math.max(1, parseInt(qtyEl.textContent || "1", 10)) : 1;
+      const idFromAttr = card.getAttribute("data-id");
+      const id = idFromAttr || slugify(name);
+      const image = imgEl ? imgEl.src : "";
 
-        // 4. Feedback UX
-        addBtn.classList.add("added");
-        setTimeout(() => addBtn.classList.remove("added"), 600);
+      // 2) Agregar al carrito (antes del feedback)
+      addToCart({ id, name, price, qty, image });
 
-        // 5. Reset cantidad visual
-        if (qtyEl) qtyEl.textContent = "1";
+      // 3) Feedback UX: animación y reset cantidad
+      addBtn.classList.add("added");
+      setTimeout(() => addBtn.classList.remove("added"), 600);
 
-        // 6. Haptic feedback (mobile)
-        if (navigator.vibrate) navigator.vibrate(30);
-      });
-    }
+      if (qtyEl) qtyEl.textContent = "1";
+
+      // 4) Haptic (mobile)
+      if (navigator.vibrate) navigator.vibrate(30);
+
+      addBtn.offsetHeight; // fuerza repaint
+    });
   });
 }
 
-// ----------------- Delegación de eventos en lista del carrito -----------------
+// ----------------- Delegación de eventos en la lista del carrito -----------------
 cartItemsList.addEventListener("click", (e) => {
   const btn = e.target.closest("button");
   if (!btn) return;
@@ -255,7 +364,9 @@ cartItemsList.addEventListener("click", (e) => {
   const action = btn.getAttribute("data-action");
   if (action === "inc") changeQty(id, +1);
   if (action === "dec") changeQty(id, -1);
-  if (action === "rem") removeItem(id);
+  if (action === "rem") {
+    removeItem(id);
+  }
 });
 
 // ----------------- WhatsApp: armar mensaje y abrir wa.me -----------------
@@ -288,15 +399,114 @@ function sendToWhatsApp() {
 
 
 // ----------------- Eventos UI globales -----------------
-cartToggle && cartToggle.addEventListener("click", toggleCart);
-closeCartBtn && closeCartBtn.addEventListener("click", closeCartPanel);
-whatsappBtn && whatsappBtn.addEventListener("click", sendToWhatsApp);
-
+if (cartToggle) cartToggle.addEventListener("click", toggleCart);
+if (closeCartBtn) closeCartBtn.addEventListener("click", closeCartPanel);
+if (whatsappBtn) whatsappBtn.addEventListener("click", sendToWhatsApp);
 
 // ----------------- Inicialización -----------------
 document.addEventListener("DOMContentLoaded", () => {
-  // Inicializar controles de las cards
-  setupComboCardControls();
-  // Renderizar carrito guardado
+  setupProductCardControls();
   renderCart();
 });
+
+
+// Abrir modal al hacer click 3 veces
+let adminClicks = 0;
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const trigger = document.getElementById("admin-trigger");
+  const modal = document.getElementById("admin-modal");
+  const exitBtn = document.getElementById("exit-edit");
+
+  trigger.addEventListener("click", () => {
+    adminClicks++;
+    if (adminClicks >= 3) {
+      modal.style.display = "flex";
+      adminClicks = 0;
+    }
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target.id === "admin-modal") {
+      modal.style.display = "none";
+    }
+  });
+
+  if (exitBtn) {
+    exitBtn.addEventListener("click", disableEditing);
+  }
+
+});
+
+async function handleAdminLogin() {
+  const password = document.getElementById("admin-password").value;
+
+  const { error } = await client.auth.signInWithPassword({
+    email: "admin@laprevia.com",
+    password: password
+  });
+
+  if (error) {
+    alert("Clave incorrecta");
+  } else {
+    document.getElementById("admin-modal").style.display = "none";
+    enableEditing();
+    alert("Modo edición activado");
+  }
+}
+
+function enableEditing() {
+  document.getElementById("edit-banner").style.display = "flex";
+
+  const priceElements = document.querySelectorAll(".price");
+
+  priceElements.forEach(priceEl => {
+    const card = priceEl.closest("[data-id]");
+    const id = card.getAttribute("data-id");
+
+    priceEl.contentEditable = true;
+    priceEl.style.border = "1px dashed #2ecc71";
+    priceEl.style.cursor = "text";
+
+    priceEl.addEventListener("blur", async () => {
+      let newPrice = priceEl.textContent.replace("$", "").trim();
+
+      if (isNaN(newPrice) || newPrice === "") {
+        alert("Precio inválido");
+        return;
+      }
+
+      await updatePrice(id, Number(newPrice));
+    });
+  });
+}
+
+async function updatePrice(id, newPrice) {
+  const { error } = await client
+    .from('products')
+    .update({ price: newPrice })
+    .eq('id', id);
+
+  if (error) {
+    console.error(error);
+    alert("Error actualizando");
+  } else {
+    console.log("Precio actualizado:", id);
+  }
+}
+
+function disableEditing() {
+  document.getElementById("edit-banner").style.display = "none";
+
+  const priceElements = document.querySelectorAll(".price");
+
+  priceElements.forEach(priceEl => {
+    priceEl.contentEditable = false;
+    priceEl.style.border = "none";
+    priceEl.style.cursor = "default";
+
+    const clone = priceEl.cloneNode(true);
+    priceEl.parentNode.replaceChild(clone, priceEl);
+  });
+}

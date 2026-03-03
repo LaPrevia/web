@@ -1,4 +1,4 @@
-:root {
+:root{
   --primary: #812929;
   --bg: #e8f5e9;
   --card: #ffffff;
@@ -8,191 +8,182 @@
   --shadow-card: 0 12px 24px rgba(18,18,18,0.08);
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-body {
+/* ========== Base & reset ========== */
+html, body{
+  width: 100%;
+  max-width: 100%;
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Segoe UI', system-ui, -apple-system, "Helvetica Neue", Arial;
   background: var(--bg);
   color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+}
+*, *::before, *::after{ box-sizing: inherit; }
+
+
+/* ========== Layout & headings ========== */
+.container{ padding: 10px 22px 40px; }
+
+.section-title{
+  margin: 0px 0px 6px;
+  font-size: 45px;
+  font-weight: 800;
+  -webkit-text-stroke: 1.8px black; 
 }
 
-/* =========================
-   LAYOUT
-========================= */
-
-.container {
-  padding: 28px 22px 40px;
+.subgroup-title{
+  margin: 0px 6px 0px;
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--card);
+  -webkit-text-stroke: 1.3px black; 
 }
 
-
-.section-title {
-  margin: 24px 0 18px 6px;
-  font-size: 40px;
-}
-
-/* =========================
-   HERO BANNER
-========================= */
-
-.hero-banner {
+/* ========== Hero ========== */
+.hero-banner{
   width: 100%;
   aspect-ratio: 2 / 1;
-  max-height: 220px;
+  max-height: 550px;
+  overflow: hidden;
+  display: flex;
+  border-bottom: 10px solid #000; /* línea negra entre el banner y el fondo siguiente */
+}
+.hero-banner img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+/* ========== Stacked background (4 images vertically) ========== */
+.bg-stack{
+  width:100%;
+  height: 400vh; /* 4 x 100vh */
+  position: relative;
+  z-index: 0;
   overflow: hidden;
 }
+.bg-piece{
+  width:100%;
+  height:100vh;
+  background-size: cover;
+  background-position: center center;
+}
 
-.hero-banner img {
+/* Place main content above the stacked background and make text white for readability */
+main.container{
+  margin-top: -400vh; /* lift main so it overlays the stacked backgrounds starting justo después del banner */
+  position: relative;
+  z-index: 2;
+  color: #ffffff;
+}
+
+/* Desktop: reducir la altura de la última imagen para evitar espacio sobrante */
+@media (min-width: 1100px) {
+  .bg-piece:last-child {
+    height: 90vh; /* última pieza más alta en pantallas grandes */
+  }
+  /* Ajustar la altura total del stack y el offset del main acorde */
+  .bg-stack { height: calc(100vh + 100vh + 100vh + 90vh); }
+  main.container { margin-top: calc(-1 * (100vh + 100vh + 100vh + 90vh)); }
+}
+
+/* Ensure headings and product text are white */
+.section-title, h3, h4, .price, .product-info, .product-card, .combo-card { color: #ffffff; }
+
+
+/* ========== Cards (product/combo) ========== */
+.combo-card,
+.product-card{
+  background: var(--card);
+  border-radius: 14px;
+  padding: 12px 8px 6px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  overflow: visible;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+
+  /* 🔑 CLAVE */
+  width: auto;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+/* Forzar altura consistente: todas las cards tendrán la misma altura
+   y el contenido interno (product-info) se estira para alinear el botón */
+.combo-card,
+.product-card {
+  height: 380px;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1 1 auto;
+  gap: 8px;
+}
+
+@media (hover: hover){
+  .combo-card:hover,
+  .product-card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 18px 34px rgba(0, 0, 0, 0.06);
+  }
+}
+
+/* Imagen dentro de la card */
+.combo-card img,
+.product-card img{
   width: 100%;
-  height: 100%;
+  height: 100px; /* reducir la altura de la imagen para dejar espacio a controles */
   object-fit: cover;
-  object-position: center;
+  border-radius: 10px;
+  background: #fafafa;
   display: block;
 }
 
-/* =========================
-   SEARCH
-========================= */
+/* Info */
+.combo-info h3,
+.product-info h4{ margin:0; font-size:16px; line-height:1.15; font-weight:600; }
+.combo-price, .price{ color:var(--primary); font-weight:800; font-size:18px; gap: 8px;}
 
-.search-container {
-  margin-bottom: 20px;
+/* ========== Controls & buttons ========== */
+.quantity-controls,
+.controls{ display:flex; align-items:center; gap:8px;}
+
+.qty-btn,
+.icon-btn{
+  width:30px; height:30px; border-radius:8px; border:none;
+  background:#ffdbdb; font-weight:700; cursor:pointer;
+  display:inline-flex; align-items:center; justify-content:center;
 }
 
-.search-container input {
-  width: 100%;
-  padding: 14px 18px;
-  border-radius: 15px;
-  border: none;
-  outline: none;
-  font-size: 16px;
-  background: white;
-  box-shadow: var(--shadow-soft);
-}
+.qty{ min-width:20px; text-align:center; font-weight:700; display:inline-block; }
 
-.search-container input::placeholder {
-  color: var(--muted);
-}
-
-/* =========================
-   COMBOS
-========================= */
-
-.combos-container {
-  display: flex;
-  gap: 22px;
-  overflow-x: auto;
-  padding-bottom: 16px;
-  margin-bottom: 42px;
-  -webkit-overflow-scrolling: touch;
-}
-
-.combos-container::-webkit-scrollbar {
-  height: 12px;
-}
-
-.combos-container::-webkit-scrollbar-track {
-  background: #e0e0e0;
-  border-radius: 10px;
-}
-
-.combos-container::-webkit-scrollbar-thumb {
+/* Add button (single authoritative definition) */
+.add-btn{
+  width:100%;
+  padding:9px;
+  border-radius:10px;
+  border:none;
   background: var(--primary);
-  border-radius: 10px;
+  color:#fff;
+  font-weight:800;
+  font-size:14px;
+  cursor:pointer;
+  transition: background-color 150ms ease, transform 150ms ease;
+  position: relative;
+  z-index: 5;
+  will-change: transform;
+  backface-visibility: hidden;
 }
+.add-btn:active{ transform: translateY(1px); }
+.add-btn:focus-visible{ outline:2px solid rgba(129,42,41,0.2); outline-offset:2px; }
+.add-btn.added{ background-color:#c22323; transform:scale(0.96); }
 
-.combo-card {
-  min-width: 230px;          
-  background: var(--card);
-  border-radius: 16px;
-  padding: 14px;             
-  box-shadow: var(--shadow-card);
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;                
-  transition: transform 200ms ease;
-}
-
-@media (hover: hover) {
-  .combo-card:hover {
-    transform: translateY(-6px);
-  }
-}
-
-.combo-card img {
-  width: 100%;
-  height: 200px;
-  margin-bottom: 4px;
-  object-fit: cover;
-  border-radius: 12px;
-  background: #fafafa;
-}
-
-.combo-info h3 {
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.2;
-}
-
-.combo-price {
-  color: var(--primary);
-  font-weight: 800;
-  font-size: 16px;
-}
-
-/* =========================
-   QUANTITY CONTROLS
-========================= */
-
-.quantity-controls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.qty-btn {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  border: none;
-  background: #f0f0f0;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.qty {
-  min-width: 18px;
-  text-align: center;
-  font-weight: 700;
-}
-
-.add-btn {
-  width: 100%;
-  padding: 11px;
-  border-radius: 12px;
-  border: none;
-  background: var(--primary);
-  color: white;
-  font-weight: 700;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-@media (hover: hover) {
-  .add-btn:hover {
-    opacity: 0.95;
-  }
-}
-
-/* =========================
-   CART BUTTON
-========================= */
-
-.cart-floating {
+/* ========== Floating cart button ========== */
+.cart-floating{
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -206,245 +197,383 @@ body {
   z-index: 1000;
 }
 
-/* =========================
-   CART PANEL
-========================= */
-
-.cart-panel {
+/* ========== Cart panel ========== */
+.cart-panel{
   position: fixed;
-  bottom: 0;
   left: 0;
+  bottom: 0;
   width: 100%;
-  max-height: 60vh; 
-  height: auto;
-
-  background: white;
+  max-height: 50vh; /* reducir altura por defecto para dejar más contenido visible */
+  background: #fff;
   border-top-left-radius: 18px;
   border-top-right-radius: 18px;
-
-  display: flex;
-  flex-direction: column;
-
+  display:flex;
+  flex-direction:column;
   transform: translateY(100%);
-  transition: 0.3s ease;
+  transition: transform 0.28s ease;
+  z-index: 1000;
+}
+.cart-panel.open{ transform: translateY(0); }
+
+/* Cuando el carrito está abierto, dar espacio al contenido para poder scrollear
+  y colocar secciones bajas (ej. Acompañantes) por encima del panel. */
+.cart-open .container { padding-bottom: 48vh; }
+
+/* En pantallas de escritorio usar 55vh para el panel y ajustar padding */
+@media (min-width: 600px) {
+  .cart-panel { max-height: 55vh; }
+  .cart-open .container { padding-bottom: 52vh; }
 }
 
-.cart-panel.open {
-  transform: translateY(0);
+.cart-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:8px 12px; border-bottom:1px solid #eee; flex-shrink:0; height:48px;
+}
+/* header title should be black instead of inheriting white from global headings */
+.cart-header h3 { color: #000; }
+.cart-items{
+  flex:1; overflow-y:auto; list-style:none; padding:0 10px; margin:0; min-height:0;
+  -webkit-overflow-scrolling: touch;
+}
+.cart-footer{
+  padding:8px 14px; border-top:1px solid #eee; position: sticky; bottom:0; background:#fff;
 }
 
-.cart-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 2px 10px;
-  border-bottom: 1px solid #eee;
-}
-
-.cart-items {
-  flex: 1;
-  overflow-y: auto;
-  list-style: none;
-  padding: 10px 15px;
-  margin: 0;
-}
-
-.add-btn.added {
-  background: #eb2525;
-  transform: scale(0.97);
-}
-
-/* =========================
-   CART ITEM
-========================= */
-
-.cart-item {
+/* ========== Cart item ========== */
+.cart-item{
   display: grid;
-  grid-template-columns: 64px 1fr 120px;
-  gap: 12px;
+  grid-template-columns: 56px 1fr 120px;
+  gap: 10px;
   align-items: center;
-  padding: 18px 0;
+  padding: 12px 0;
   border-bottom: 1px solid #f0f0f0;
 }
+.cart-thumb-wrap{ width:56px; height:56px; border-radius:10px; overflow:hidden; background:#fafafa; display:flex; align-items:center; justify-content:center; }
+.cart-thumb{ width:100%; height:100%; object-fit:cover; }
+.cart-details .item-name{ font-weight:700; font-size:14px; margin-bottom:1px; }
+.cart-details .item-meta{ font-size:13px; color:var(--muted); }
+.cart-actions{ display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+.cart-qty-controls{ display:flex; align-items:center; gap:8px; background:#f4f6f7; padding:6px 8px; border-radius:999px; }
+.item-qty{ min-width:22px; text-align:center; font-weight:700; }
 
-.cart-thumb-wrap {
-  width: 64px;
-  height: 64px;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #fafafa;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.cart-thumb {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.cart-details .item-name {
-  font-weight: 700;
-  font-size: 15px;
-  margin-bottom: 6px;
-}
-
-.cart-details .item-meta {
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.cart-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
-}
-
-.cart-qty-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: #f4f6f7;
-  padding: 6px 8px;
-  border-radius: 999px;
-}
-
-.icon-btn {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  border: none;
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.06);
-  cursor: pointer;
-}
-
-.item-qty {
-  min-width: 22px;
-  text-align: center;
-  font-weight: 700;
-}
-
-.remove-icon {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-/* =========================
-   CART SUMMARY
-========================= */
-
-#cart-total {
-  font-size: 14px;
-  padding: 18px 15px 10px;
-}
-
-#cart-total .summary-label {
-  font-weight: 800;
-  margin-bottom: 8px;
-  font-size: 13px;
-}
-
-#cart-total .summary-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 6px 0;
-}
-
-#cart-total .total-row {
-  margin-top: 6px;
-  padding-top: 6px;
-  border-top: 1px solid #eee;
-  font-weight: 900;
-  font-size: 16px;
-}
-
-.whatsapp-btn {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 12px;
-  background: #25D366;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.cart-empty {
-  text-align: center;
-  padding: 20px;
-  color: #666;
-}
-
-.cart-empty strong {
+/* Estado vacío: mostrar mensaje en dos líneas legibles (no usar grid) */
+.cart-item.empty{
   display: block;
-  font-size: 18px;
-  margin-bottom: 6px;
-}
-
-.cart-empty span {
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-.cart-item.empty {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 20px;
+  padding: 14px 6px;
   border-bottom: none;
 }
+.cart-item.empty .item-empty{ display:block; }
+.cart-item.empty .item-name{ display:block; font-weight:700; font-size:15px; margin-bottom:6px; }
+.cart-item.empty .item-meta{ display:block; color:var(--muted); }
 
-.close-cart-btn {
-  background: transparent;
-  border: none;
-  padding: 6px;
-  cursor: pointer;
+/* ========== Summary / CTA ========== */
+#cart-total{ font-size:13px; padding:0px 0px 8px; }
+#cart-total .summary-label{ margin:0; padding:0; font-weight:900; font-size:16px; line-height:1.1; }
+#cart-total .summary-row{ display:flex; justify-content:space-between; padding:4px 0; font-size:15px; }
+#cart-total .total-row{ margin-top:2px; padding-top:2px; border-top:1px solid #eee; font-weight:900; font-size:16px; }
 
+.whatsapp-btn{ width:100%; padding:10px; border-radius:10px; border:none; background:#25D366; color:#fff; font-weight:700; cursor:pointer; display:block; }
+
+/* ========== Close / misc ========== */
+.close-cart-btn{ background:transparent; border:none; padding:6px; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+.close-icon, .close-cart-btn img{ width:20px; height:20px; object-fit:contain; display:block; }
+
+/* ========== CATEGORY ROW (horizontal single row) ========== */
+/* Usamos FLEX para máxima estabilidad */
+.category-row{
   display: flex;
-  align-items: center;
-  justify-content: center;
+  gap: 16px;
 
-  border-radius: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  padding: 8px 6px 16px;
+  margin-bottom: 28px;
+
+  -webkit-overflow-scrolling: touch;
 }
 
-.close-cart-btn:hover {
-  background: #f2f2f2;
+/* Cada tarjeta dentro de la fila: no se encogen ni se expanden */
+.category-row > .product-card,
+.category-row > .combo-card{
+  flex: 0 0 160px;       /* ancho base para mobile */
+  scroll-snap-align: start;
+  box-sizing: border-box;
+  width: auto;           /* el flex-basis controla el tamaño */
+  min-width: 0;
 }
 
-/* ICONO */
-.close-icon {
-  width: 35px;
-  height: 35px;
+/* Responsive: cuántas tarjetas entran por vista */
+@media (min-width: 480px){
+  .category-row > .product-card,
+  .category-row > .combo-card { flex: 0 0 180px; }
+}
+@media (min-width: 700px){
+  .category-row > .product-card,
+  .category-row > .combo-card { flex: 0 0 210px; }
+}
+@media (min-width: 1100px){
+  .category-row > .product-card,
+  .category-row > .combo-card { flex: 0 0 240px; }
+}
+
+/* Scrollbar discreto */
+.category-row::-webkit-scrollbar{ height:8px; }
+.category-row::-webkit-scrollbar-thumb{ background: rgba(255,255,255,0.5); border-radius:10px; }
+.category-row::-webkit-scrollbar-track { background: rgba(255,255,255,0.3); }
+
+/* mobile: reducir separación entre tarjetas manteniendo una sola columna */
+@media (max-width: 600px) {
+  .category-row,
+  .products-row {
+    gap: 0;               /* cartas pegadas completamente */
+    padding-bottom: 0;    /* sin relleno inferior */
+  }
+}
+
+/* ========== Grid fallbacks (no usar) ========== */
+/* Si tienes reglas antiguas que fuerzan grid, bórralas o coméntalas.
+   Mantengo este selector vacío por compatibilidad en caso de legacy. */
+.products-row,
+.products-grid { display: block; }
+
+/* ========== Utilities ========== */
+.hidden{ display:none !important; }
+
+.add-btn:focus-visible,
+.qty-btn:focus-visible,
+.icon-btn:focus-visible,
+.close-cart-btn:focus-visible{
+  outline: 2px solid rgba(129,42,41,0.18);
+  outline-offset: 2px;
+}
+
+/* imágenes nunca rompen layout */
+img{ max-width:100%; height:auto; display:block; }
+
+
+/* 1) Forzar que los contenedores de productos sean filas horizontales */
+.category-row,
+.products-row {
+  display: flex !important;          /* forzamos fila horizontal */
+  flex-wrap: nowrap !important;      /* una sola fila */
+  gap: 14px !important;
+  align-items: flex-start !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  padding: 8px 6px 16px !important;
+  margin-bottom: 28px !important;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+}
+
+/* 2) Asegurar que TODAS las tarjetas dentro del row no ocupen 100% */
+/*    y que su tamaño lo controle el flex-basis (responsive abajo) */
+.category-row > * ,
+.products-row > * {
+  flex: 0 0 160px !important;   /* ancho base mobile */
+  min-width: 0 !important;      /* evita overflow por contenido interno */
+  width: auto !important;
+  box-sizing: border-box !important;
+  scroll-snap-align: start;
+}
+
+/* 3) Override definitivo: ninguna tarjeta horizontal puede tener width:100% */
+.category-row .product-card,
+.category-row .combo-card,
+.products-row .product-card,
+.products-row .combo-card {
+  width: auto !important;
+  max-width: 100% !important;
+  flex-shrink: 0 !important;
+  min-width: 0 !important;
+}
+
+/* 4) Responsive: cuántas entran según pantalla */
+@media (min-width: 480px){
+  .category-row > *, .products-row > * { flex-basis: 180px !important; }
+}
+@media (min-width: 700px){
+  .category-row > *, .products-row > * { flex-basis: 210px !important; }
+}
+@media (min-width: 1100px){
+  .category-row > *, .products-row > * { flex-basis: 240px !important; }
+}
+
+/* 5) Scrollbar y nitidez */
+.category-row::-webkit-scrollbar,
+.products-row::-webkit-scrollbar { height: 8px; }
+.category-row::-webkit-scrollbar-thumb,
+.products-row::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.5); border-radius: 10px; }
+.category-row::-webkit-scrollbar-track,
+.products-row::-webkit-scrollbar-track { background: rgba(255,255,255,0.3); }
+
+/* 6) Safety: que las imágenes no inflen la tarjeta */
+.category-row img,
+.products-row img,
+.product-card img,
+.combo-card img {
+  max-width: 100%;
+  height: auto;
   display: block;
 }
 
-/* =========================
-   DESKTOP CART
-========================= */
+/* 7) Si por alguna razón se heredó width:100% en un wrapper interno: reducirlo */
+.category-row .card-wrapper,
+.products-row .card-wrapper {
+  width: auto !important;
+}
 
-@media (min-width: 700px) {
+/* 8) Si quieres forcear el comportamiento de snap al terminar el arrastre */
+.category-row { scroll-behavior: smooth; }
+
+/* ==========================
+  Override: Mantener tamaño móvil en escritorio
+  ========================== */
+/* Forzar que las cards mantengan el mismo ancho que en móvil (ej: 180px)
+  y que en pantallas grandes las filas puedan hacer wrap para no estirar tarjetas. */
+.combo-card,
+.product-card {
+  height: 400px; /* altura fija para alinear botones */
+}
+
+.product-info .add-btn { margin-top: auto; }
+
+/* Forzar ancho fijo de las cards (igual que móvil) */
+.category-row > *, .products-row > * {
+  flex: 0 0 180px !important;
+  max-width: 180px !important;
+}
+
+/* En pantallas anchas permitir wrap para que varias columnas ocupen el espacio
+  sin estirar las tarjetas y sin cortar botones. */
+
+@media (min-width: 1100px){
+  .products-row { flex-wrap: wrap !important; gap: 20px !important; }
+  .products-row > * { flex: 0 0 180px !important; max-width: 180px !important; }
+}
+
+/* ===== Override: mantener texto dentro de las tarjetas en negro ===== */
+/* Algunas reglas previas pintaban h4 y .product-card en blanco para el fondo apilado;
+   aquí forzamos que el contenido interno de las cards sea legible (color oscuro). */
+.product-card,
+.combo-card {
+  color: var(--text) !important;
+  background: var(--card); /* asegurar fondo claro */
+}
+.product-card h4,
+.product-card .price,
+.product-card .controls,
+.product-card .qty,
+.product-card .add-btn,
+.combo-card h3,
+.combo-card .combo-price {
+  color: var(--text) !important;
+}
+
+/* BOTÓN INVISIBLE EN ESQUINA */
+#admin-trigger {
+  position: fixed;
+  bottom: 5px;
+  left: 5px;        
+  width: 28px;
+  height: 28px;
+  opacity: 0.04;    
+  cursor: pointer;
+  z-index: 9999;
+}
+
+/* MODAL */
+#admin-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.admin-box {
+  background: #111;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.admin-box input {
+  padding: 8px;
+  background: #222;
+  border: 1px solid #444;
+  color: white;
+}
+
+.admin-box button {
+  padding: 8px 14px;
+  background: #2ecc71;
+  border: none;
+  cursor: pointer;
+}
+
+#edit-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #e74c3c;
+  color: white;
+  padding: 8px 16px;
+  font-weight: bold;
+  z-index: 9999;
+
+  display: none;          
+  justify-content: space-between;
+  align-items: center;
+}
+
+#exit-edit {
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#exit-edit:hover {
+  opacity: 0.7;
+}
+
+.category-row,
+.products-row {
+  display: flex !important;
+  flex-wrap: nowrap !important;  
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  gap: 16px;
+}
+
+@media (min-width: 1024px) {
+
   .cart-panel {
-    left: auto;
+    position: fixed;
+    bottom: 24px;
     right: 24px;
     width: 420px;
-    border-radius: 16px;
-    bottom: 24px;
-    height: auto;
-    max-height: 60vh;
+    max-height: 65vh;
+
+    left: auto;
+    top: auto;
+
+    border-radius: 18px;
+    overflow-y: auto;
+
+    z-index: 1001;
+
+    /* estado cerrado en desktop */
     transform: translateY(120%);
   }
 
   .cart-panel.open {
     transform: translateY(0);
   }
-}
 
-.hidden {
-  display: none !important;
 }

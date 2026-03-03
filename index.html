@@ -1,290 +1,546 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Tienda de Bebidas</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-    <!-- BUSCADOR -->
-<section class="hero-banner">
-<img src="img/banner.webp" alt="Tienda de Bebidas">
-</section>
+  <!-- BANNER -->
+  <section class="hero-banner">
+    <img src="img/banner.webp" alt="Tienda de Bebidas">
+  </section>
 
-  <!-- BUSCADOR -->
-<div class="search-container">
-  <input type="text" id="searchInput" placeholder="Buscar bebida...">
-</div>
-
-<!-- SECCIÓN COMBOS -->
-<h2 class="section-title">Combos Especiales</h2>
-
-<div class="combos-container">
-
-  <div class="combo-card">
-    <img src="img/fernet.webp" alt="Fernet + Coca">
-    <div class="combo-info">
-      <h3>Fernet + Coca</h3>
-      <div class="combo-price">$14.500</div>
-      <div class="quantity-controls">
-        <button class="qty-btn">-</button>
-        <span class="qty">1</span>
-        <button class="qty-btn">+</button>
-      </div>
-      <button class="add-btn">Agregar</button>
-    </div>
+  <!-- STACKED BACKGROUND (4 imágenes, una pegada a la otra) -->
+  <div class="bg-stack" aria-hidden="true">
+    <div class="bg-piece" style="background-image: url('img/1.webp')"></div>
+    <div class="bg-piece" style="background-image: url('img/2.webp')"></div>
+    <div class="bg-piece" style="background-image: url('img/3.webp')"></div>
+    <div class="bg-piece" style="background-image: url('img/4.webp')"></div>
   </div>
 
-  <div class="combo-card">
-    <img src="img/heineken.webp" alt="Heineken x6">
-    <div class="combo-info">
-      <h3>Heineken x6</h3>
-      <div class="combo-price">$8.500</div>
-      <div class="quantity-controls">
-        <button class="qty-btn">-</button>
-        <span class="qty">1</span>
-        <button class="qty-btn">+</button>
-      </div>
-      <button class="add-btn">Agregar</button>
-    </div>
-  </div>
-
-  <div class="combo-card">
-    <img src="img/brahma.webp" alt="Brahma x6">
-    <div class="combo-info">
-      <h3>Brahma x6</h3>
-      <div class="combo-price">$7.500</div>
-      <div class="quantity-controls">
-        <button class="qty-btn">-</button>
-        <span class="qty">1</span>
-        <button class="qty-btn">+</button>
-      </div>
-      <button class="add-btn">Agregar</button>
-    </div>
-  </div>
-
-  <div class="combo-card">
-    <img src="img/miller.webp" alt="Miller x6">
-    <div class="combo-info">
-      <h3>Miller x6</h3>
-      <div class="combo-price">$7.300</div>
-      <div class="quantity-controls">
-        <button class="qty-btn">-</button>
-        <span class="qty">1</span>
-        <button class="qty-btn">+</button>
-      </div>
-      <button class="add-btn">Agregar</button>
-    </div>
-  </div>
-
-  <div class="combo-card">
-    <img src="img/skyy.webp" alt="Skyy Vodka + Mixer">
-    <div class="combo-info">
-      <h3>Skyy Vodka + Mixer</h3>
-      <div class="combo-price">$14.000</div>
-      <div class="quantity-controls">
-        <button class="qty-btn">-</button>
-        <span class="qty">1</span>
-        <button class="qty-btn">+</button>
-      </div>
-      <button class="add-btn">Agregar</button>
-    </div>
-  </div>
-
-  <div class="combo-card">
-    <img src="img/smirnofcer.webp" alt="Smirnoff + Energizante">
-    <div class="combo-info">
-      <h3>Smirnoff + Energizante</h3>
-      <div class="combo-price">$12.000</div>
-      <div class="quantity-controls">
-        <button class="qty-btn">-</button>
-        <span class="qty">1</span>
-        <button class="qty-btn">+</button>
-      </div>
-      <button class="add-btn">Agregar</button>
-    </div>
-  </div>
-
-  <div class="combo-card">
-    <img src="img/beefeater.webp" alt="Beefeater Gin + Tonic">
-    <div class="combo-info">
-      <h3>Beefeater Gin + Tonic</h3>
-      <div class="combo-price">$13.000</div>
-      <div class="quantity-controls">
-        <button class="qty-btn">-</button>
-        <span class="qty">1</span>
-        <button class="qty-btn">+</button>
-      </div>
-      <button class="add-btn">Agregar</button>
-    </div>
-  </div>
-
-  <div class="combo-card">
-    <img src="img/campari.webp" alt="Campari + Soda">
-    <div class="combo-info">
-      <h3>Campari + Soda</h3>
-      <div class="combo-price">$12.500</div>
-      <div class="quantity-controls">
-        <button class="qty-btn">-</button>
-        <span class="qty">1</span>
-        <button class="qty-btn">+</button>
-      </div>
-      <button class="add-btn">Agregar</button>
-    </div>
-  </div>
-
-  <div class="combo-card">
-    <img src="img/drlemon.webp" alt="Dr.Lemon Pack x4">
-    <div class="combo-info">
-      <h3>Dr.Lemon Pack x4</h3>
-      <div class="combo-price">$2.200</div>
-      <div class="quantity-controls">
-        <button class="qty-btn">-</button>
-        <span class="qty">1</span>
-        <button class="qty-btn">+</button>
-      </div>
-      <button class="add-btn">Agregar</button>
-    </div>
-  </div>
-
-  <div class="combo-card">
-    <img src="img/gancia.webp" alt="Gancia x2">
-    <div class="combo-info">
-      <h3>Gancia x2</h3>
-      <div class="combo-price">$9.800</div>
-      <div class="quantity-controls">
-        <button class="qty-btn">-</button>
-        <span class="qty">1</span>
-        <button class="qty-btn">+</button>
-      </div>
-      <button class="add-btn">Agregar</button>
-    </div>
-  </div>
-
-  <div class="combo-card">
-    <img src="img/merle.webp" alt="Merlot Bottle">
-    <div class="combo-info">
-      <h3>Merlot (1 botella)</h3>
-      <div class="combo-price">$11.200</div>
-      <div class="quantity-controls">
-        <button class="qty-btn">-</button>
-        <span class="qty">1</span>
-        <button class="qty-btn">+</button>
-      </div>
-      <button class="add-btn">Agregar</button>
-    </div>
-  </div>
-
-  <div class="combo-card">
-    <img src="img/norton.webp" alt="Norton Malbec">
-    <div class="combo-info">
-      <h3>Norton Malbec</h3>
-      <div class="combo-price">$12.000</div>
-      <div class="quantity-controls">
-        <button class="qty-btn">-</button>
-        <span class="qty">1</span>
-        <button class="qty-btn">+</button>
-      </div>
-      <button class="add-btn">Agregar</button>
-    </div>
-  </div>
-
-  <div class="combo-card">
-    <img src="img/tresplumas.webp" alt="Tres Plumas Pack">
-    <div class="combo-info">
-      <h3>Tres Plumas Pack</h3>
-      <div class="combo-price">$9.800</div>
-      <div class="quantity-controls">
-        <button class="qty-btn">-</button>
-        <span class="qty">1</span>
-        <button class="qty-btn">+</button>
-      </div>
-      <button class="add-btn">Agregar</button>
-    </div>
-  </div>
-
-  <div class="combo-card">
-    <img src="img/smirnof.webp" alt="Smirnoff">
-    <div class="combo-info">
-      <h3>Smirnoff</h3>
-      <div class="combo-price">$16.000</div>
-      <div class="quantity-controls">
-        <button class="qty-btn">-</button>
-        <span class="qty">1</span>
-        <button class="qty-btn">+</button>
-      </div>
-      <button class="add-btn">Agregar</button>
-    </div>
-  </div>
-
-</div>
-
-
-
-
-  <!-- CONTENIDO -->
   <main class="container">
 
-    <h2 class="section-title">Categorías</h2>
+    <!-- ===================== -->
+    <!-- 🍸 DESTILADOS -->
+    <!-- ===================== -->
 
-    <div class="categories">
+    <h2 class="section-title">🍸 Destilados 🍸</h2>
+    <div class="products-row">
+      <!-- Skyy Andromeda + 4 Speed -->
+      <article class="product-card" data-id="skyy-andromeda-4-speed" data-category="destilados">
+        <img src="img/skyy-andromeda+4-latas-speed.webp" alt="Skyy Andromeda + 4 Speed">
+        <div class="product-info">
+          <h4>Skyy Andromeda + 4 Speed</h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
 
-      <div class="category-card">
-        <div class="category-icon">🍺</div>
-        <p>Cervezas</p>
-      </div>
+      <!-- Skyy Apple + 4 Speed -->
+      <article class="product-card" data-id="skyy-apple-4-speed" data-category="destilados">
+        <img src="img/skyy-apple+4-latas-speed.webp" alt="Skyy Apple + 4 Speed">
+        <div class="product-info">
+          <h4>Skyy Apple + 4 Speed</h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
 
-      <div class="category-card">
-        <div class="category-icon">🍾</div>
-        <p>Vinos Espumantes</p>
-      </div>
+      <!-- Skyy Blueberry + 4 Speed -->
+      <article class="product-card" data-id="skyy-blueberry-4-speed" data-category="destilados">
+        <img src="img/skyy-blueberri+4-latas-speed.webp" alt="Skyy Blueberry + 4 Speed">
+        <div class="product-info">
+          <h4>Skyy Blueberry + 4 Speed</h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
 
-      <div class="category-card">
-        <div class="category-icon">🥃</div>
-        <p>Aperitivos / Licores</p>
-      </div>
+      <!-- Skyy Cosmic + 4 Speed -->
+      <article class="product-card" data-id="skyy-cosmic-4-speed" data-category="destilados">
+        <img src="img/skyy-cosmic+4-latas-speed.webp" alt="Skyy Cosmic + 4 Speed">
+        <div class="product-info">
+          <h4>Skyy Cosmic + 4 Speed</h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
 
-      <div class="category-card">
-        <div class="category-icon">🍸</div>
-        <p>Vodka</p>
-      </div>
+      <!-- Skyy Raspberry + 4 Speed -->
+      <article class="product-card" data-id="skyy-raspberry-4-speed" data-category="destilados">
+        <img src="img/skyy-raspberry+4-latas-speed.webp" alt="Skyy Raspberry + 4 Speed">
+        <div class="product-info">
+          <h4>Skyy Raspberry + 4 Speed</h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
 
-      <div class="category-card">
-        <div class="category-icon">🥤</div>
-        <p>Acompañantes</p>
-      </div>
+      <!-- Smirnoff + 3 Speed -->
+      <article class="product-card" data-id="smirnoff-3-speed" data-category="destilados">
+        <img src="img/smirnof+3-latas-speed.webp" alt="Smirnoff + 3 Speed">
+        <div class="product-info">
+          <h4>Smirnoff + 3 Speed</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
 
+      <!-- Smirnoff x6 sabores -->
+      <article class="product-card" data-id="smirnoff-x6-sabores" data-category="destilados">
+        <img src="img/smirnoff-x6-latas.webp" alt="Smirnoff x6 sabores">
+        <div class="product-info">
+          <h4>Smirnoff x6 (manzana/frambuesa)</h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Tres Plumas + 4 Speed -->
+      <article class="product-card" data-id="tresplumas-4-speed" data-category="destilados">
+        <img src="img/tresplumas+4-latas-speed.webp" alt="Tres Plumas + 4 Speed">
+        <div class="product-info">
+          <h4>Tres Plumas + 4 Speed</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Beefeater + 2 Schweppes -->
+      <article class="product-card" data-id="beefeater-2-schweppes" data-category="destilados">
+        <img src="img/beefeater+2-schweepes.webp" alt="Beefeater + 2 Schweppes">
+        <div class="product-info">
+          <h4>Beefeater + 2 Schweppes</h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Merle + 2 Schweppes -->
+      <article class="product-card" data-id="merle-2-schweppes" data-category="destilados">
+        <img src="img/merle+2-scheweepes.webp" alt="Merle + 2 Schweppes">
+        <div class="product-info">
+          <h4>Merle + 2 Schweppes</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+    </div>
+
+    <!-- ===================== -->
+    <!-- 🍹 APERITIVOS  -->
+    <!-- ===================== -->
+    <h2 class="section-title">🍹 Aperitivos 🍹</h2>
+    <div class="products-row">
+      <!-- Fernet + 2 cocas + hielo -->
+      <article class="product-card" data-id="fernet-2-cocas-hielo" data-category="aperitivos">
+        <img src="img/fernet+2-coca-1,5L+hielo.webp" alt="Fernet + 2 Cocacolas + Hielo">
+        <div class="product-info">
+          <h4>Fernet + 2 Cocacolas + Hielo</h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Gancia + Sprite + hielo -->
+      <article class="product-card" data-id="gancia-sprite-hielo" data-category="aperitivos">
+        <img src="img/gancia+sprite+hielo.webp" alt="Gancia + Sprite + Hielo">
+        <div class="product-info">
+          <h4>Gancia + Sprite + Hielo</h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Campari + 2 Baggios -->
+      <article class="product-card" data-id="campari-2-baggios" data-category="aperitivos">
+        <img src="img/campari+2-baggios.webp" alt="Campari + 2 Baggios">
+        <div class="product-info">
+          <h4>Campari + 2 Baggios</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Gancia x6 latas -->
+      <article class="product-card" data-id="gancia-x6" data-category="aperitivos">
+        <img src="img/Gancia-x6-latas.webp" alt="Gancia x6 latas">
+        <div class="product-info">
+          <h4>Gancia x6 latas</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Dr Lemon 1,5L -->
+      <article class="product-card" data-id="dr-lemon-1-5l" data-category="aperitivos">
+        <img src="img/drlemon-1,5L.webp" alt="Dr Lemon 1,5L">
+        <div class="product-info">
+          <h4>Dr Lemon 1,5L</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+    </div>
+
+    <!-- ===================== -->
+    <!-- 🍺 CERVEZAS -->
+    <!-- ===================== -->
+    <h2 class="section-title">🍺 Cervezas 🍺</h2>
+
+    <h3 class="subgroup-title">Botellas</h3>
+    <div class="products-row">
+      <!-- Patagonia Amber Lager -->
+      <article class="product-card" data-id="patagonia-amber" data-category="cervezas" data-subgroup="botellas" role="group" aria-label="Patagonia Amber Lager">
+        <img src="img/patagonia-amber-lager.webp" alt="Patagonia Amber Lager">
+        <div class="product-info">
+          <h4>Patagonia Amber Lager</h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls">
+            <button class="qty-btn">-</button>
+            <span class="qty">1</span>
+            <button class="qty-btn">+</button>
+          </div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Patagonia IPA -->
+      <article class="product-card" data-id="patagonia-ipa" data-category="cervezas" data-subgroup="botellas" role="group" aria-label="Patagonia IPA">
+        <img src="img/patagonia-ipa.webp" alt="Patagonia IPA">
+        <div class="product-info">
+          <h4>Patagonia IPA</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls">
+            <button class="qty-btn">-</button>
+            <span class="qty">1</span>
+            <button class="qty-btn">+</button>
+          </div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+    </div>
+
+    <h3 class="subgroup-title">Latas x6</h3>
+    <div class="products-row">
+      <!-- Amstel x6 -->
+      <article class="product-card" data-id="amstel-x6" data-category="cervezas" data-subgroup="latas-x6">
+        <img src="img/amstel-lager-x6-latas.webp" alt="Amstel x6">
+        <div class="product-info">
+          <h4>Amstel x6</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Brahma x6 -->
+      <article class="product-card" data-id="brahma-x6" data-category="cervezas" data-subgroup="latas-x6">
+        <img src="img/brahma-x6-latas.webp" alt="Brahma x6">
+        <div class="product-info">
+          <h4>Brahma x6</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Heineken x6 -->
+      <article class="product-card" data-id="heineken-x6" data-category="cervezas" data-subgroup="latas-x6">
+        <img src="img/heineken-x6-latas.webp" alt="Heineken x6">
+        <div class="product-info">
+          <h4>Heineken x6</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Imperial APA x6 -->
+      <article class="product-card" data-id="imperial-apa-x6" data-category="cervezas" data-subgroup="latas-x6">
+        <img src="img/imperial-apa-x6-latas.webp" alt="Imperial APA x6">
+        <div class="product-info">
+          <h4>Imperial APA x6</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Imperial IPA x6 -->
+      <article class="product-card" data-id="imperial-ipa-x6" data-category="cervezas" data-subgroup="latas-x6">
+        <img src="img/imperial-ipa-x6-latas.webp" alt="Imperial IPA x6">
+        <div class="product-info">
+          <h4>Imperial IPA x6</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Imperial Golden x6 -->
+      <article class="product-card" data-id="imperial-golden-x6" data-category="cervezas" data-subgroup="latas-x6">
+        <img src="img/imperial-golden-x6-latas.webp" alt="Imperial Golden x6">
+        <div class="product-info">
+          <h4>Imperial Golden x6</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Miller x6 -->
+      <article class="product-card" data-id="miller-x6" data-category="cervezas" data-subgroup="latas-x6">
+        <img src="img/miller-x6-latas.webp" alt="Miller x6">
+        <div class="product-info">
+          <h4>Miller x6</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Schneider Limón x6 -->
+      <article class="product-card" data-id="schneider-limon-x6" data-category="cervezas" data-subgroup="latas-x6">
+        <img src="img/scheneider-limon-x6-latas.webp" alt="Schneider Limón x6">
+        <div class="product-info">
+          <h4>Schneider Limón x6</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+    </div>
+
+
+    <!-- ===================== -->
+    <!-- 🍷 VINOS -->
+    <!-- ===================== -->
+    <h2 class="section-title">🍷 Vinos 🍷</h2>
+    <div class="products-row">
+      <article class="product-card" data-id="norton-2-speed" data-category="vinos">
+        <img src="img/norton+2-latas-speed.webp" alt="Norton + 2 Speed">
+        <div class="product-info">
+          <h4>Norton + 2 Speed</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+    </div>
+
+    <!-- ===================== -->
+    <!-- 🥤 ACOMPAÑANTES -->
+    <!-- ===================== -->
+    <h2 class="section-title">🥤 Bebidas Acompañantes 🥤</h2>
+    <div class="products-row">
+      <!-- Aquarius 500ml -->
+      <article class="product-card" data-id="aquarius-500" data-category="acompanantes">
+        <img src="img/aquarius-500ml.webp" alt="Aquarius 500ml">
+        <div class="product-info">
+          <h4>Aquarius 500ml</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Gaseosas 500ml -->
+      <article class="product-card" data-id="gaseosas-500" data-category="acompanantes">
+        <img src="img/gaseosas-500ml.webp" alt="Gaseosas 500ml">
+        <div class="product-info">
+          <h4>Gaseosas 500ml</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Gatorade 600ml -->
+      <article class="product-card" data-id="gatorade-600" data-category="acompanantes">
+        <img src="img/gatorade-600ml.webp" alt="Gatorade 600ml">
+        <div class="product-info">
+          <h4>Gatorade 600ml</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Levité 1,5L -->
+      <article class="product-card" data-id="levite-1-5l" data-category="acompanantes">
+        <img src="img/levite-1,5L.webp" alt="Levité 1,5L">
+        <div class="product-info">
+          <h4>Levité 1,5L</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
+
+      <!-- Monster x6 -->
+      <article class="product-card" data-id="monster-x6" data-category="acompanantes">
+        <img src="img/monster-x6-latas.webp" alt="Monster x6">
+        <div class="product-info">
+          <h4>Monster x6</h4>
+          <h4></h4>
+          <div class="price" data-price="0">$0</div>
+          <div class="controls"><button class="qty-btn">-</button><span class="qty">1</span><button class="qty-btn">+</button></div>
+          <button class="add-btn">Agregar</button>
+        </div>
+      </article>
     </div>
 
   </main>
 
   <!-- BOTÓN CARRITO FLOTANTE -->
-<div id="cart-toggle" class="cart-floating">
-  🛒 <span id="cart-count">0</span>
-</div>
-
-<!-- PANEL CARRITO -->
-<div id="cart-panel" class="cart-panel" aria-hidden="true">
-  <div class="cart-header">
-    <h3>Tu pedido</h3>
-    <button id="close-cart" aria-label="Cerrar carrito" class="close-cart-btn">
-      <img src="img/equis.webp" alt="Cerrar" class="close-icon">
-    </button>
+  <div id="cart-toggle" class="cart-floating" aria-controls="cart-panel" aria-expanded="false">
+    🛒 <span id="cart-count">0</span>
   </div>
 
-  <ul id="cart-items" class="cart-items"></ul>
+  <!-- PANEL CARRITO -->
+  <div id="cart-panel" class="cart-panel" aria-hidden="true">
+    <div class="cart-header">
+      <h3>Tu pedido</h3>
+      <button id="close-cart" aria-label="Cerrar carrito" class="close-cart-btn">
+        <img src="img/equis.webp" alt="Cerrar">
+      </button>
+    </div>
 
-  <div class="cart-footer">
-    <div id="cart-total">Total: $0</div>
-    <button id="whatsapp-btn" class="whatsapp-btn">
-      Hace tu pedido por WhatsApp
-    </button>
+    <ul id="cart-items" class="cart-items"></ul>
+
+    <div class="cart-footer">
+      <div id="cart-total">Total: $0</div>
+      <button id="whatsapp-btn" class="whatsapp-btn">Hace tu pedido por WhatsApp</button>
+    </div>
   </div>
-</div>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
+  
+
+  */* CÓDIGOS DE SUPABASE PARA CARGAR PRECIOS DESDE LA BASE DE DATOS */*
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+  const { createClient } = supabase;
+
+  const client = createClient(
+    "https://tacrwqsuisehyjganajr.supabase.co",
+    "sb_publishable_t6UB3pc8hXB70ldQdCN23A_vXBYzIRn"
+  );
+
+  // ---------------------
+  // CARGAR PRECIOS
+  // ---------------------
+  async function loadPrices() {
+    const { data, error } = await client
+      .from('products')
+      .select('*');
+
+    if (error) {
+      console.error("Error cargando precios:", error);
+      return;
+    }
+
+    data.forEach(product => {
+      const card = document.querySelector(`[data-id="${product.id}"]`);
+      if (!card) return;
+
+      const priceEl = card.querySelector(".price");
+      if (priceEl) {
+        priceEl.textContent = "$" + product.price;
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", loadPrices);
+
+  // ---------------------
+  // LOGIN ADMIN
+  // ---------------------
+  async function adminLogin(email, password) {
+    const { data, error } = await client.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) {
+      alert("Clave incorrecta");
+    } else {
+      alert("Modo edición activado");
+      enableEditing();
+    }
+  }
+
+  // ---------------------
+  // ACTUALIZAR PRECIO
+  // ---------------------
+  async function updatePrice(id, newPrice) {
+    const { error } = await client
+      .from('products')
+      .update({ price: newPrice })
+      .eq('id', id);
+
+    if (error) {
+      console.error(error);
+    } else {
+      alert("Precio actualizado");
+    }
+  }
+  </script>
+
+  <div id="admin-trigger"></div>
+
+  <div id="admin-modal">
+    <div class="admin-box">
+      <input type="password" id="admin-password" placeholder="Clave de administrador">
+      <button onclick="handleAdminLogin()">Entrar</button>
+    </div>
+  </div>
+
+  <div id="edit-banner">
+    <span>MODO EDICIÓN ACTIVADO</span>
+    <span id="exit-edit">✕</span>
+  </div>
 
 </body>
 </html>
