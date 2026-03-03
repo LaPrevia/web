@@ -49,11 +49,8 @@ function getProductImage(productName) {
     : "img/banner.webp"; // fallback elegante
 }
 
-// script.js - Carrito dinámico adaptado a product-card (reemplazar archivo actual)
-// -------------------------------------------------------------------------------
-
 const CART_KEY = "catalogo_cart_v3";
-const PHONE_NUMBER = "5492241603438";
+const PHONE_NUMBER = "5492243434572"; // número de WhatsApp para pedidos (con código de país, sin + ni espacios)
 
 // Estado del carrito (carga desde localStorage)
 let cart = JSON.parse(localStorage.getItem(CART_KEY) || "[]");

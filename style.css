@@ -30,7 +30,23 @@ html, body{
   margin: 0px 0px 6px;
   font-size: 45px;
   font-weight: 800;
-  -webkit-text-stroke: 1.8px black; 
+
+  /* Relleno */
+  color: white;
+
+  /* Contorno principal */
+  -webkit-text-stroke: 1.5px black;
+
+  /* Refuerzo para mobile */
+  text-shadow:
+    -1px -1px 0 black,
+     1px -1px 0 black,
+    -1px  1px 0 black,
+     1px  1px 0 black,
+    -2px  0px 0 black,
+     2px  0px 0 black,
+     0px -2px 0 black,
+     0px  2px 0 black;
 }
 
 .subgroup-title{
@@ -38,7 +54,16 @@ html, body{
   font-size: 30px;
   font-weight: 900;
   color: var(--card);
-  -webkit-text-stroke: 1.3px black; 
+
+  -webkit-text-stroke: 1.3px black;
+
+  text-shadow:
+    -1px -1px 0 black,
+     1px -1px 0 black,
+    -1px  1px 0 black,
+     1px  1px 0 black,
+     0px  2px 0 black,
+     0px -2px 0 black;
 }
 
 /* ========== Hero ========== */
