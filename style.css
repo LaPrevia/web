@@ -27,43 +27,29 @@ html, body{
 .container{ padding: 10px 22px 40px; }
 
 .section-title{
+  color: rgb(0, 0, 0);
   margin: 0px 0px 6px;
-  font-size: 45px;
-  font-weight: 800;
+  font-size: 30px;
+  font-weight: 750;
 
-  /* Relleno */
-  color: white;
-
-  /* Contorno principal */
-  -webkit-text-stroke: 1.5px black;
-
-  /* Refuerzo para mobile */
-  text-shadow:
-    -1px -1px 0 black,
-     1px -1px 0 black,
-    -1px  1px 0 black,
-     1px  1px 0 black,
-    -2px  0px 0 black,
-     2px  0px 0 black,
-     0px -2px 0 black,
-     0px  2px 0 black;
 }
 
 .subgroup-title{
-  margin: 0px 6px 0px;
-  font-size: 30px;
+  margin: 0px 0px 0px;
+  font-size: 20px;
   font-weight: 900;
-  color: var(--card);
+  color: rgb(255, 255, 255);
+}
 
-  -webkit-text-stroke: 1.3px black;
+.section-title,
+.subgroup-title {
+  display: block;
+  width: fit-content;
+  background: rgba(0, 0, 0, 0.726);
+  padding: 10px 18px;
+  border-radius: 14px;
+  backdrop-filter: blur(4px);
 
-  text-shadow:
-    -1px -1px 0 black,
-     1px -1px 0 black,
-    -1px  1px 0 black,
-     1px  1px 0 black,
-     0px  2px 0 black,
-     0px -2px 0 black;
 }
 
 /* ========== Hero ========== */
@@ -77,24 +63,27 @@ html, body{
 }
 .hero-banner img{ width:100%; height:100%; object-fit:cover; display:block; }
 
-/* ========== Stacked background (4 images vertically) ========== */
-.bg-stack{
-  width:100%;
-  height: 400vh; /* 4 x 100vh */
+
+/* ========== Stacked background (Ajustado) ========== */
+.bg-stack {
+  width: 100%;
+  height: 430vh; /* Aumentado de 400vh a 480vh (120 x 4) */
   position: relative;
   z-index: 0;
   overflow: hidden;
 }
-.bg-piece{
-  width:100%;
-  height:100vh;
+
+.bg-piece {
+  width: 100%;
+  height: 120vh; /* Cada imagen ahora es un 20% más alta que la pantalla */
   background-size: cover;
   background-position: center center;
 }
 
-/* Place main content above the stacked background and make text white for readability */
-main.container{
-  margin-top: -400vh; /* lift main so it overlays the stacked backgrounds starting justo después del banner */
+
+/* Ajuste del desplazamiento del contenido */
+main.container {
+  margin-top: -430vh; /* Debe ser igual al height de .bg-stack */
   position: relative;
   z-index: 2;
   color: #ffffff;
@@ -103,11 +92,16 @@ main.container{
 /* Desktop: reducir la altura de la última imagen para evitar espacio sobrante */
 @media (min-width: 1100px) {
   .bg-piece:last-child {
-    height: 90vh; /* última pieza más alta en pantallas grandes */
+    height: 110vh; /* Un poco más corta que las demás para cerrar el diseño */
   }
-  /* Ajustar la altura total del stack y el offset del main acorde */
-  .bg-stack { height: calc(100vh + 100vh + 100vh + 90vh); }
-  main.container { margin-top: calc(-1 * (100vh + 100vh + 100vh + 90vh)); }
+  
+  /* Recalculamos: 120 + 120 + 120 + 110 = 400vh */
+  .bg-stack { 
+    height: 400vh; 
+  }
+  main.container { 
+    margin-top: -400vh; 
+  }
 }
 
 /* Ensure headings and product text are white */
@@ -576,7 +570,7 @@ img{ max-width:100%; height:auto; display:block; }
   gap: 16px;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 860px) {
 
   .cart-panel {
     position: fixed;
